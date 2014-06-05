@@ -1,0 +1,64 @@
+description = 'Fortuneo stress tests'
+
+apply plugin: 'scala'
+
+repositories {
+    maven { url "http://repository.excilys.com/content/groups/public" }
+    mavenCentral()
+}
+
+ext {
+  SCALA_VERSION = "2.9.3"
+  GATLING_VERSION = "1.5.4"
+}
+
+dependencies {
+    testCompile "org.scala-lang:scala-library:${SCALA_VERSION}"
+    testCompile "com.excilys.ebi.gatling.highcharts:gatling-charts-highcharts:${GATLING_VERSION}"
+    testCompile "com.excilys.ebi.gatling:gatling-core:${GATLING_VERSION}"
+    testCompile "com.excilys.ebi.gatling:gatling-jdbc:${GATLING_VERSION}"
+    testCompile "com.excilys.ebi.gatling:gatling-recorder:${GATLING_VERSION}"
+}
+
+sourceSets {
+    test {
+        scala {
+            srcDir 'simulations'
+        }
+        resources {
+            srcDir 'resources'
+        }
+    }
+}
+
+task gatling(dependsOn: ['processTestResources', 'compileTestScala']) << {
+    javaexec {
+      standardInput = System.in
+      main = 'com.excilys.ebi.gatling.app.Gatling'
+      classpath = sourceSets.test.output + sourceSets.test.runtimeClasspath
+
+      jvmArgs = [
+        '-Xmx1024M',
+        '-Xms1024M',
+        '-Xss1m',
+        '-XX:MaxPermSize=256M'
+      ]
+
+      args '-sbf', sourceSets.test.output.classesDir,
+           '-rf', file('reports'),
+           '-df', sourceSets.test.output.resourcesDir,
+           '-s', simulation
+    }
+}
+
+task recorder(dependsOn: ['processTestResources', 'compileTestScala']) << {
+    javaexec {
+      standardInput = System.in
+      main = 'com.excilys.ebi.gatling.recorder.GatlingRecorder'
+      classpath = sourceSets.test.output + sourceSets.test.runtimeClasspath
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.12'
+}
