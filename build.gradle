@@ -9,15 +9,15 @@ repositories {
 
 ext {
   SCALA_VERSION = "2.9.3"
-  GATLING_VERSION = "1.5.4"
+  GATLING_VERSION = "2.0.0-M3a"
 }
 
 dependencies {
     testCompile "org.scala-lang:scala-library:${SCALA_VERSION}"
-    testCompile "com.excilys.ebi.gatling.highcharts:gatling-charts-highcharts:${GATLING_VERSION}"
-    testCompile "com.excilys.ebi.gatling:gatling-core:${GATLING_VERSION}"
-    testCompile "com.excilys.ebi.gatling:gatling-jdbc:${GATLING_VERSION}"
-    testCompile "com.excilys.ebi.gatling:gatling-recorder:${GATLING_VERSION}"
+    testCompile "io.gatling.highcharts:gatling-highcharts:${GATLING_VERSION}"
+    testCompile "io.gatling:gatling-core:${GATLING_VERSION}"
+    testCompile "io.gatling:gatling-jdbc:${GATLING_VERSION}"
+    testCompile "io.gatling:gatling-recorder:${GATLING_VERSION}"
 }
 
 sourceSets {
@@ -34,7 +34,7 @@ sourceSets {
 task gatling(dependsOn: ['processTestResources', 'compileTestScala']) << {
     javaexec {
       standardInput = System.in
-      main = 'com.excilys.ebi.gatling.app.Gatling'
+      main = 'io.gatling.app.Gatling'
       classpath = sourceSets.test.output + sourceSets.test.runtimeClasspath
 
       jvmArgs = [
@@ -54,7 +54,7 @@ task gatling(dependsOn: ['processTestResources', 'compileTestScala']) << {
 task recorder(dependsOn: ['processTestResources', 'compileTestScala']) << {
     javaexec {
       standardInput = System.in
-      main = 'com.excilys.ebi.gatling.recorder.GatlingRecorder'
+      main = 'io.gatling.recorder.GatlingRecorder'
       classpath = sourceSets.test.output + sourceSets.test.runtimeClasspath
     }
 }
