@@ -14,7 +14,8 @@ ext {
 
 dependencies {
     testCompile "org.scala-lang:scala-library:${SCALA_VERSION}"
-    testCompile "io.gatling.highcharts:gatling-highcharts:${GATLING_VERSION}"
+    testCompile "io.gatling.highcharts:gatling-charts-highcharts:${GATLING_VERSION}"
+    testCompile "io.gatling:gatling-app:${GATLING_VERSION}"
     testCompile "io.gatling:gatling-core:${GATLING_VERSION}"
     testCompile "io.gatling:gatling-jdbc:${GATLING_VERSION}"
     testCompile "io.gatling:gatling-recorder:${GATLING_VERSION}"
