@@ -1,4 +1,4 @@
-description = 'Fortuneo stress tests'
+description = 'Gatling stress tests'
 
 apply plugin: 'scala'
 
