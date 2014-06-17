@@ -1,23 +1,19 @@
-
-import com.excilys.ebi.gatling.core.Predef._
-import com.excilys.ebi.gatling.http.Predef._
-import com.excilys.ebi.gatling.jdbc.Predef._
-import com.excilys.ebi.gatling.http.Headers.Names._
-import akka.util.duration._
+import io.gatling.core.Predef._
+import io.gatling.core.session.Expression
+import io.gatling.http.Predef._
+import io.gatling.jdbc.Predef._
+import io.gatling.http.Headers.Names._
+import io.gatling.http.Headers.Values._
+import scala.concurrent.duration._
 import bootstrap._
 import assertions._
 
 class MyFirstSimulation extends Simulation {
 
-	val httpConf = httpConfig.baseURL("https://www.google.fr")
-
-	val chain_0 =
-		exec(http("GET google home")
-					.get("/")
-			)
+	val httpProtocol = http.baseURL("https://www.google.fr")
 
 	val scn = scenario("Global scenario")
-		.exec(chain_0)
+        .exec(http("GET google home").get("/"))
 
-	setUp(scn.users(1).protocolConfig(httpConf))
+	setUp(scn.inject(atOnce(1 user))).protocols(httpProtocol)
 }
