@@ -3,18 +3,18 @@ description = 'Gatling stress tests'
 apply plugin: 'scala'
 
 repositories {
-    maven { url "http://repository.excilys.com/content/groups/public" }
     mavenCentral()
 }
 
 ext {
   SCALA_VERSION = "2.9.3"
-  GATLING_VERSION = "2.0.0-M3a"
+  GATLING_VERSION = "2.0.0-RC5"
+  GATLING_HIGHCHARTS_VERSION = "2.0.0-RC4"
 }
 
 dependencies {
     testCompile "org.scala-lang:scala-library:${SCALA_VERSION}"
-    testCompile "io.gatling.highcharts:gatling-charts-highcharts:${GATLING_VERSION}"
+    testCompile "io.gatling.highcharts:gatling-charts-highcharts:${GATLING_HIGHCHARTS_VERSION}"
     testCompile "io.gatling:gatling-app:${GATLING_VERSION}"
     testCompile "io.gatling:gatling-core:${GATLING_VERSION}"
     testCompile "io.gatling:gatling-jdbc:${GATLING_VERSION}"
